@@ -71,20 +71,26 @@ kruti.addEventListener('mouseup', () => {
     }
     if (zekrutil) {
         usesome = false
+
+        // Додає рандомний множинник для крутіння барабану
         random_multiplier1 = randomNumber(3, 8)
         random_multiplier2 = randomNumber(10, 20)
 
+
         document.getElementById('baraban').style.transition = "10s"
         if (kruti.value > 5 && kruti.value < 15) {
-            document.getElementById('baraban').style.transform = `rotate(${val + (kruti.value + random_multiplier1) * 10}deg)`
-            val += (kruti.value + random_multiplier1) * 10
+            document.getElementById('baraban').style.transform = `rotate(${(val + (kruti.value + random_multiplier1) * 10) - random_multiplier1}deg)`
+            val += ((kruti.value + random_multiplier1) * 10) - random_multiplier1
         } else if (kruti.value >= 15) {
-            document.getElementById('baraban').style.transform = `rotate(${val + (kruti.value) * random_multiplier2}deg)`
-            val += (kruti.value) * random_multiplier2
+            document.getElementById('baraban').style.transform = `rotate(${(val + kruti.value * random_multiplier2) - random_multiplier2}deg)`
+            val = (val + kruti.value * random_multiplier2) - random_multiplier2
         }
 
+        // Відключає можливість крутити колесо
         kruti.disabled = true
 
+
+        // Включає можливість крутити колесо після того, як воно перестало крутитись
         setTimeout(() => {
             kruti.disabled = false
             document.getElementById('baraban').style.transition = "0s"
