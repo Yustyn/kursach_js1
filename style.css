@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*::selection{
+    color: black;
+}
+
+body {
+    background-color: #424242;
+}
+
+.container div:nth-of-type(1){
+    position: relative;
+}
+
+#jakob, #baraban {
+    position: absolute;
+}
+
+#baraban {
+    top: 100px;
+    left: 100px;
+}
+
+#jakob {
+    top: 152px;
+    left: 153px;
+}
+
+#kruti {
+    transform: rotate(90deg);
+    position: absolute;
+    top: 220px;
+    left: 340px;
+    width: 200px;
+}
+
+div > .arrow {
+    font-size: 20px;
+    position: absolute;
+    color: rgb(184, 197, 255);
+    top: 222px;
+    left: 365px;
+    transform: rotate(226deg);
+}
+
+#sektor_slot {
+    height: 50px;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.034);
+    top: 80px;
+    left: 500px;
+    font-size: 40px;
+    color: rgb(223, 221, 221);
+    text-align: center;
+}
+
+.label_slot {
+    position: absolute;
+    top: 30px;
+    left: 500px;
+    font-size: 30px;
+    color: rgb(214, 214, 214);
+}
+
+ul.word {
+    list-style-type: none;
+    display: flex;
+    position: absolute;
+    top: 20px;
+    left: 800px;
+    font-size: 30px;
+}
+
+ul.word li {
+    background-color: white;
+    width: 19px;
+    height: 34px;
+    padding: 5px 5px 5px 5px;
+    margin: 1px;
+    border: 1px solid black;
+    text-transform: uppercase;
+}
+
+#show_points {
+
+    background-color: white;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 40px;
+}
+
+
+.d-abs {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.185);
+}
