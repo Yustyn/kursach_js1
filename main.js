@@ -23,7 +23,24 @@ let sektor = '',
     usesome = false,
     letter = false,
     another_letter = false,
-    counter = 0
+    counter = 0,
+    val = 0
+
+
+// Масив слів для відгадування
+let word = [
+    'патч',
+    // 'девелопер',
+    // 'джаваскріпт',
+    // 'курсова',
+    // 'паралелепіпед'
+]
+
+// Викликає рандомне слово із масиву
+asked_word = word[randomNumber(0, word.length - 1)]
+word_show(asked_word)
+
+let $word_list = document.querySelectorAll('ul.word li')
 
 // Генерує барабан та кнопки
 function baraban() {
@@ -78,6 +95,11 @@ function prize_auto() {
 
     $close_icon.addEventListener('click', () => {
         cont.classList.remove('d-none')
+        overlay.removeChild(ul)
+        overlay.removeChild(unwin)
+        overlay.removeChild($close_icon)
+        overlay.removeChild($tip_1)
+        overlay.removeChild(but_continue)
         document.body.removeChild(overlay)
     })
 
@@ -116,6 +138,11 @@ function prize_auto() {
 
                     document.querySelector('.continue').addEventListener('click', () => {
                         cont.classList.remove('d-none')
+                        overlay.removeChild(ul)
+                        overlay.removeChild(unwin)
+                        overlay.removeChild($close_icon)
+                        overlay.removeChild($tip_1)
+                        overlay.removeChild(but_continue)
                         document.body.removeChild(overlay)
                     })
                 }
@@ -128,9 +155,9 @@ function prize_auto() {
 
 // Запуск події сектора
 function sektor_result() {
-    if (kluch) {
-        prize_auto()
-    }
+    // if (kluch) {
+    prize_auto()
+    // }
 
     if (letter) {
         what_letter()
@@ -161,9 +188,6 @@ baraban()
 kruti.addEventListener('mousedown', () => {
     usesome = true
 })
-
-let val = 0
-
 kruti.addEventListener('mousemove', () => {
     if (usesome && kruti.value < 100) {
         document.getElementById('baraban').style.transform = `rotate(${val - kruti.value}deg)`
@@ -296,15 +320,6 @@ kruti.addEventListener('mouseup', () => {
     // alert(points)
 })
 
-// Масив слів для відгадування
-let word = [
-    'патч',
-    // 'девелопер',
-    // 'джаваскріпт',
-    // 'курсова',
-    // 'паралелепіпед'
-]
-
 // Показує пусті клітинки від кількості букв в залежності від вибраного слова
 function word_show(word) {
     ul = document.createElement('ul')
@@ -315,12 +330,6 @@ function word_show(word) {
         ul.insertAdjacentHTML('beforeend', `<li></li>`)
     }
 }
-
-// Викликає рандомне слово із масиву
-asked_word = word[randomNumber(0, word.length - 1)]
-word_show(asked_word)
-
-let $word_list = document.querySelectorAll('ul.word li')
 
 // Відгадування букви
 function what_letter() {
