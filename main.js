@@ -1,11 +1,18 @@
-let $container = document.querySelector('.container')
-let $button = document.getElementById('spin')
-let cont = document.querySelector('div.container')
-let overlay = document.createElement('div')
-let but_again = document.createElement('div')
+let $container = document.querySelector('.container'),
+    $button = document.getElementById('spin'),
+    cont = document.querySelector('div.container'),
+    overlay = document.createElement('div'),
+    but_again = document.createElement('div'),
+    not_in_word_letter_list = document.createElement('ul'),
+    letter_p = document.createElement('p')
 
+letter_p.classList.add('letter_p')
+letter_p.textContent = "Список використаних букв:"
+$container.appendChild(letter_p)
+not_in_word_letter_list.classList.add('not_in_word')
 but_again.classList.add('play_again')
 but_again.textContent = 'PLAY AGAIN'
+$container.appendChild(not_in_word_letter_list)
 
 let sektor = '',
     zekrutil = false,
@@ -15,11 +22,8 @@ let sektor = '',
     try_kluch = true,
     usesome = false,
     letter = false,
-    another_letter = false
-
-
-
-
+    another_letter = false,
+    counter = 0
 
 // Генерує барабан та кнопки
 function baraban() {
@@ -43,7 +47,6 @@ function baraban() {
 
     $container.appendChild(d)
 }
-
 
 // Створення сторінки вибору шкатулки
 function prize_auto() {
@@ -109,14 +112,12 @@ function prize_auto() {
                     but_continue.classList.add('continue')
                     but_continue.textContent = 'ПРОДОВЖИТИ ГРУ'
                     overlay.appendChild(but_continue)
-
                     overlay.insertAdjacentElement('afterbegin', unwin)
 
                     document.querySelector('.continue').addEventListener('click', () => {
                         cont.classList.remove('d-none')
-                        document.body.remove(overlay)
+                        document.body.removeChild(overlay)
                     })
-
                 }
             }
             kluch = false
@@ -297,10 +298,11 @@ kruti.addEventListener('mouseup', () => {
 
 // Масив слів для відгадування
 let word = [
+    'патч',
     // 'девелопер',
     // 'джаваскріпт',
     // 'курсова',
-    'паралелепіпед'
+    // 'паралелепіпед'
 ]
 
 // Показує пусті клітинки від кількості букв в залежності від вибраного слова
@@ -320,28 +322,44 @@ word_show(asked_word)
 
 let $word_list = document.querySelectorAll('ul.word li')
 
-
-
 // Відгадування букви
 function what_letter() {
     let letter_ask = prompt('Введіть букву: ').toLowerCase()
-    console.log(asked_word, letter_ask)
+
+    not_in_word_letter_list.insertAdjacentHTML('beforeend', `<li>${letter_ask}</li>`)
+    counter += 1
+
     for (idx in asked_word) {
         if (asked_word[idx] == letter_ask) {
             $word_list[idx].textContent = asked_word[idx]
+            kruti.disabled = true
 
-        } else {
-            another_letter = true
+            console.log(not_in_word_letter_list.length)
+
+            setTimeout(() => {
+                all_world = prompt("Ви готові ввести повне слово? ").toLowerCase()
+                if (all_world == asked_word) {
+                    win()
+                }
+
+            }, 1000);
+            kruti.disabled = false
         }
     }
-    not_in_word_letter_list = document.createElement('ul')
-    not_in_word_letter_list.classList.add('not_in_word')
-    not_in_word_letter_ = document.createElement('li')
-    if (another_letter) {
-        $container.appendChild(not_in_word_letter_list)
-        not_in_word_letter_list.insertAdjacentHTML('beforeend', `<li>${letter_ask}</li>`)
-        another_letter = false
+
+    if (counter > 2) {
+        lose()
     }
 
+
     letter = false
+
+}
+
+function win() {
+    alert('WIN!')
+}
+
+function lose() {
+    alert('You lose!')
 }

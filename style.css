@@ -181,11 +181,27 @@ ul.word li {
 .container ul.not_in_word {
     display: flex;
     list-style-type: none;
-    color: rgb(255, 67, 67);
+    color: rgb(255, 255, 255);
     position: relative;
     text-transform: capitalize;
     width: 400px;
-    top: 130px;
+    top: 210px;
     left: 800px;
     font-size: 30px;
+}
+
+.container ul.not_in_word li {
+    padding: 5px;
+    margin: 2px;
+    background-color: rgb(75, 74, 74);
+}
+
+.container p.letter_p {
+    position: absolute;
+    font-size: 25px;
+    top: 180px;
+    left: 800px;
+    color: rgb(190, 190, 190);
+    text-transform: uppercase;
+    width: 400px;
 }
