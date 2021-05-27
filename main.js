@@ -24,16 +24,18 @@ let sektor = '',
     letter = false,
     another_letter = false,
     counter = 0,
-    val = 0
+    val = 0,
+    true_letter = 0,
+    good_letter = false
 
 
 // Масив слів для відгадування
 let word = [
     'патч',
-    // 'девелопер',
-    // 'джаваскріпт',
-    // 'курсова',
-    // 'паралелепіпед'
+    'девелопер',
+    'джаваскріпт',
+    'курсова',
+    'паралелепіпед'
 ]
 
 // Викликає рандомне слово із масиву
@@ -155,9 +157,9 @@ function prize_auto() {
 
 // Запуск події сектора
 function sektor_result() {
-    // if (kluch) {
-    prize_auto()
-    // }
+    if (kluch) {
+        prize_auto()
+    }
 
     if (letter) {
         what_letter()
@@ -167,7 +169,6 @@ function sektor_result() {
 // Показує кількість очок, запускає подію відповідно до сектору барабану
 function sktr(sektor) {
     setTimeout(() => {
-        // alert(sektor)
         show_points.innerText = points
         sektor_slot.innerText = sektor
 
@@ -206,7 +207,6 @@ kruti.addEventListener('mouseup', () => {
         random_multiplier1 = randomNumber(3, 8)
         random_multiplier2 = randomNumber(10, 20)
 
-
         document.getElementById('baraban').style.transition = "10s"
         if (kruti.value > 5 && kruti.value < 15) {
             document.getElementById('baraban').style.transform = `rotate(${(val + (kruti.value + random_multiplier1) * 10) - random_multiplier1}deg)`
@@ -218,7 +218,6 @@ kruti.addEventListener('mouseup', () => {
 
         // Відключає можливість крутити колесо
         kruti.disabled = true
-
 
         // Включає можливість крутити колесо після того, як воно перестало крутитись
         setTimeout(() => {
@@ -314,6 +313,7 @@ kruti.addEventListener('mouseup', () => {
                 break
             default:
                 alert(`Something goes wrong`)
+                console.log(angle)
         }
     }
     zekrutil = false
@@ -335,6 +335,7 @@ function word_show(word) {
 function what_letter() {
     let letter_ask = prompt('Введіть букву: ').toLowerCase()
 
+
     not_in_word_letter_list.insertAdjacentHTML('beforeend', `<li>${letter_ask}</li>`)
     counter += 1
 
@@ -342,31 +343,41 @@ function what_letter() {
         if (asked_word[idx] == letter_ask) {
             $word_list[idx].textContent = asked_word[idx]
             kruti.disabled = true
-
-            console.log(not_in_word_letter_list.length)
-
-            setTimeout(() => {
-                all_world = prompt("Ви готові ввести повне слово? ").toLowerCase()
-                if (all_world == asked_word) {
-                    win()
-                }
-
-            }, 1000);
-            kruti.disabled = false
+            true_letter += 1
+            good_letter = true
+            console.log(good_letter)
         }
     }
 
-    if (counter > 2) {
+    if (good_letter) {
+        console.log('really good leatter')
+        setTimeout(() => {
+            all_world = prompt("Ви готові ввести повне слово? ").toLowerCase()
+            if (all_world == asked_word) {
+                win()
+            }
+            kruti.disabled = false
+
+        }, 1000);
+    }
+
+    if (true_letter == asked_word.length) {
+        win()
+    }
+
+    if (counter > 20) {
         lose()
     }
 
-
     letter = false
-
+    good_letter = false
 }
 
 function win() {
-    alert('WIN!')
+    for (idx in asked_word) {
+        $word_list[idx].textContent = asked_word[idx]
+    }
+    alert('Вітаю, Ви виграли!')
 }
 
 function lose() {
