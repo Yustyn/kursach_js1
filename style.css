@@ -177,3 +177,15 @@ ul.word li {
     left: 500px;
     cursor: pointer;
 }
+
+.container ul.not_in_word {
+    display: flex;
+    list-style-type: none;
+    color: rgb(255, 67, 67);
+    position: relative;
+    text-transform: capitalize;
+    width: 400px;
+    top: 130px;
+    left: 800px;
+    font-size: 30px;
+}

@@ -14,7 +14,11 @@ let sektor = '',
     kluch = false,
     try_kluch = true,
     usesome = false,
-    letter = false
+    letter = false,
+    another_letter = false
+
+
+
 
 
 // Генерує барабан та кнопки
@@ -110,7 +114,7 @@ function prize_auto() {
 
                     document.querySelector('.continue').addEventListener('click', () => {
                         cont.classList.remove('d-none')
-                        document.body.removeChild(overlay)
+                        document.body.remove(overlay)
                     })
 
                 }
@@ -125,6 +129,10 @@ function prize_auto() {
 function sektor_result() {
     if (kluch) {
         prize_auto()
+    }
+
+    if (letter) {
+        what_letter()
     }
 }
 
@@ -201,11 +209,13 @@ kruti.addEventListener('mouseup', () => {
             case angle <= 348 && angle < 15:
                 sektor = '1000 очок'
                 points += 1000
+                letter = true
                 sktr(sektor)
                 break
             case angle >= 15 && angle < 40:
                 sektor = '900 очок'
                 points += 900
+                letter = true
                 sktr(sektor)
                 break
             case angle >= 40 && angle < 66:
@@ -216,11 +226,13 @@ kruti.addEventListener('mouseup', () => {
             case angle >= 66 && angle < 91:
                 sektor = '300 очок'
                 points += 300
+                letter = true
                 sktr(sektor)
                 break
             case angle >= 91 && angle < 118:
                 sektor = '50 очок'
                 points += 50
+                letter = true
                 sktr(sektor)
                 break
             case angle >= 118 && angle < 142:
@@ -236,26 +248,31 @@ kruti.addEventListener('mouseup', () => {
             case angle >= 169 && angle < 194:
                 sektor = '600 очок'
                 points += 600
+                letter = true
                 sktr(sektor)
                 break
             case angle >= 194 && angle < 219:
                 sektor = '450 очок'
                 points += 450
+                letter = true
                 sktr(sektor)
                 break
             case angle >= 219 && angle < 245:
                 sektor = '700 очок'
                 points += 700
+                letter = true
                 sktr(sektor)
                 break
             case angle >= 245 && angle < 271:
                 sektor = '500 очок'
                 points += 500
+                letter = true
                 sktr(sektor)
                 break
             case angle >= 271 && angle < 297:
                 sektor = '200 очок'
                 points += 200
+                letter = true
                 sktr(sektor)
                 break
             case angle >= 297 && angle < 323:
@@ -267,6 +284,7 @@ kruti.addEventListener('mouseup', () => {
             case angle >= 323 && angle < 348:
                 sektor = '100 очок'
                 points += 100
+                letter = true
                 sktr(sektor)
                 break
             default:
@@ -279,9 +297,9 @@ kruti.addEventListener('mouseup', () => {
 
 // Масив слів для відгадування
 let word = [
-    'девелопер',
-    'джаваскріпт',
-    'курсова',
+    // 'девелопер',
+    // 'джаваскріпт',
+    // 'курсова',
     'паралелепіпед'
 ]
 
@@ -297,5 +315,33 @@ function word_show(word) {
 }
 
 // Викликає рандомне слово із масиву
-word_show(word[randomNumber(0, word.length - 1)])
+asked_word = word[randomNumber(0, word.length - 1)]
+word_show(asked_word)
 
+let $word_list = document.querySelectorAll('ul.word li')
+
+
+
+// Відгадування букви
+function what_letter() {
+    let letter_ask = prompt('Введіть букву: ').toLowerCase()
+    console.log(asked_word, letter_ask)
+    for (idx in asked_word) {
+        if (asked_word[idx] == letter_ask) {
+            $word_list[idx].textContent = asked_word[idx]
+
+        } else {
+            another_letter = true
+        }
+    }
+    not_in_word_letter_list = document.createElement('ul')
+    not_in_word_letter_list.classList.add('not_in_word')
+    not_in_word_letter_ = document.createElement('li')
+    if (another_letter) {
+        $container.appendChild(not_in_word_letter_list)
+        not_in_word_letter_list.insertAdjacentHTML('beforeend', `<li>${letter_ask}</li>`)
+        another_letter = false
+    }
+
+    letter = false
+}
