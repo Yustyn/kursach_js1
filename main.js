@@ -1,11 +1,18 @@
 let $container = document.querySelector('.container')
 let $button = document.getElementById('spin')
+let cont = document.querySelector('div.container')
+let overlay = document.createElement('div')
+let but_again = document.createElement('div')
+
+but_again.classList.add('play_again')
+but_again.textContent = 'PLAY AGAIN'
 
 let sektor = '',
     zekrutil = false,
     points = 0,
     prize = false,
     kluch = false,
+    try_kluch = true,
     usesome = false,
     letter = false
 
@@ -33,12 +40,102 @@ function baraban() {
     $container.appendChild(d)
 }
 
-// Показує кількість очок 
+
+// Створення сторінки вибору шкатулки
+function prize_auto() {
+    let cont = document.querySelector('div.container'),
+        img = `<img src="images/chest_closed.png" class="chest_closed" alt="closed chest"></img>`,
+        close = `<i class="fas fa-times close"></i>`,
+        tip_1 = `<p>Щоб відмовитись від відкриття сундука та грати далі натисніть хрестик</p>`
+
+    cont.classList.add('d-none')
+    overlay.classList.add('overlay')
+    overlay.classList.add('d-block')
+
+    document.body.append(overlay)
+
+
+    let ul = document.createElement('ul')
+    overlay.appendChild(ul)
+    overlay.insertAdjacentHTML('beforeend', close)
+    overlay.insertAdjacentHTML('afterbegin', tip_1)
+
+    for (i = 1; i <= 4; i++) {
+        ul.insertAdjacentHTML('beforeend', `<li class="chest_list">${img}</li>`)
+    }
+
+    chest_unlocked_number = randomNumber(0, 3)
+    let $chest_closed = document.getElementsByClassName('chest_closed'),
+        $li_item = document.getElementsByClassName('chest_list'),
+        $close_icon = document.querySelector('.close')
+
+    $close_icon.addEventListener('click', () => {
+        cont.classList.remove('d-none')
+        document.body.removeChild(overlay)
+    })
+
+    for (let i = 0; i < 4; i++) {
+        $chest_closed[i].addEventListener('click', () => {
+            if (try_kluch) {
+                if (chest_unlocked_number == i) {
+                    $li_item[i].innerHTML = `<img src="images/shkatKey.png" alt="chest_prise">`
+                    win = document.createElement('h3')
+                    win.innerText = 'Влучний вибір! Ви виграли АВТОМОБІЛЬ!'
+                    overlay.insertAdjacentElement('afterbegin', win)
+
+                    $tip_1 = document.querySelector('.overlay > p')
+                    $tip_1.classList.add('d-none')
+                    $close_icon.classList.add('d-none')
+
+                    overlay.appendChild(but_again)
+
+                    document.querySelector('.play_again').addEventListener('click', () => {
+                        window.location.reload()
+                    })
+                } else {
+                    $li_item[i].innerHTML = `<img class="chest_opened" src="images/chest_opened.png" alt="chest_opened">`
+
+                    unwin = document.createElement('h3')
+                    unwin.innerText = 'Невдача :( Можливо пощастить наступного разу'
+                    $tip_1 = document.querySelector('.overlay > p')
+                    $tip_1.classList.add('d-none')
+
+                    let but_continue = document.createElement('div')
+
+                    but_continue.classList.add('continue')
+                    but_continue.textContent = 'ПРОДОВЖИТИ ГРУ'
+                    overlay.appendChild(but_continue)
+
+                    overlay.insertAdjacentElement('afterbegin', unwin)
+
+                    document.querySelector('.continue').addEventListener('click', () => {
+                        cont.classList.remove('d-none')
+                        document.body.removeChild(overlay)
+                    })
+
+                }
+            }
+            kluch = false
+            try_kluch = false
+        })
+    }
+}
+
+// Запуск події сектора
+function sektor_result() {
+    if (kluch) {
+        prize_auto()
+    }
+}
+
+// Показує кількість очок, запускає подію відповідно до сектору барабану
 function sktr(sektor) {
     setTimeout(() => {
         // alert(sektor)
         show_points.innerText = points
         sektor_slot.innerText = sektor
+
+        sektor_result()
     }, 10500);
 
 }
@@ -72,7 +169,7 @@ kruti.addEventListener('mouseup', () => {
     if (zekrutil) {
         usesome = false
 
-        // Додає рандомний множинник для крутіння барабану
+        // Додає рандомний множинник для крутіння барабанупш
         random_multiplier1 = randomNumber(3, 8)
         random_multiplier2 = randomNumber(10, 20)
 
@@ -133,6 +230,7 @@ kruti.addEventListener('mouseup', () => {
                 break
             case angle >= 142 && angle < 169:
                 sektor = 'Приз'
+                prize = true
                 sktr(sektor)
                 break
             case angle >= 169 && angle < 194:
@@ -162,6 +260,8 @@ kruti.addEventListener('mouseup', () => {
                 break
             case angle >= 297 && angle < 323:
                 sektor = 'Ключ'
+                kluch = true
+                try_kluch = true
                 sktr(sektor)
                 break
             case angle >= 323 && angle < 348:

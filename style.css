@@ -7,8 +7,10 @@
     color: black;
 }
 
-body {
+.container {
     background-color: #424242;
+    width: 100vw;
+    height: 100vh;
 }
 
 .container div:nth-of-type(1){
@@ -93,9 +95,85 @@ ul.word li {
     font-size: 40px;
 }
 
-
-.d-abs {
-    width: 100vw;
+.overlay {
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.185);
+    width: 100vw;
+    background-color: rgb(112, 112, 112);
+    position: relative;
+}
+
+.overlay > p {
+    font-size: 30px;
+    padding-top: 20px;
+    padding-left: 30px;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+}
+
+.overlay > h3 {
+    font-size: 45px;
+    padding-top: 20px;
+    padding-left: 30px;
+}
+
+.overlay ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0 20px;
+}
+
+.overlay ul li {
+    margin: 20px;
+}
+
+.overlay ul li .chest_closed {
+    width: 200px;
+    cursor: pointer;
+}
+
+.overlay ul li .chest_opened {
+    margin-top: -10px;
+}
+
+.close {
+    position: absolute;
+    top: 40px;
+    left: 1040px;
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.d-block {
+    display: block;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.play_again {
+    font-size: 30px;
+    width: 100px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    border: 3px solid rgb(7, 7, 7);
+    border-radius: 5px;
+    background-color: white;
+    position: absolute;
+    left: 500px;
+    cursor: pointer;
+}
+
+.continue {
+    font-size: 30px;
+    width: 220px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    border: 3px solid rgb(7, 7, 7);
+    border-radius: 5px;
+    background-color: white;
+    position: absolute;
+    left: 500px;
+    cursor: pointer;
 }
