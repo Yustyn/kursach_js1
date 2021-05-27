@@ -206,14 +206,15 @@ kruti.addEventListener('mouseup', () => {
         // Додає рандомний множинник для крутіння барабанупш
         random_multiplier1 = randomNumber(3, 8)
         random_multiplier2 = randomNumber(10, 20)
+        random_angle = randomNumber(1, 360)
 
         document.getElementById('baraban').style.transition = "10s"
         if (kruti.value > 5 && kruti.value < 15) {
-            document.getElementById('baraban').style.transform = `rotate(${(val + (kruti.value + random_multiplier1) * 10) - random_multiplier1}deg)`
-            val += ((kruti.value + random_multiplier1) * 10) - random_multiplier1
+            document.getElementById('baraban').style.transform = `rotate(${(val + (kruti.value + random_multiplier1) * 10) + random_angle}deg)`
+            val += ((kruti.value + random_multiplier1) * 10) + random_angle
         } else if (kruti.value >= 15) {
-            document.getElementById('baraban').style.transform = `rotate(${(val + kruti.value * random_multiplier2) - random_multiplier2}deg)`
-            val = (val + kruti.value * random_multiplier2) - random_multiplier2
+            document.getElementById('baraban').style.transform = `rotate(${(val + kruti.value * random_multiplier2) + random_angle}deg)`
+            val = (val + kruti.value * random_multiplier2) + random_angle
         }
 
         // Відключає можливість крутити колесо
@@ -331,7 +332,7 @@ function word_show(word) {
     }
 }
 
-// Відгадування букви
+// Відгадування букви, слова
 function what_letter() {
     let letter_ask = prompt('Введіть букву: ').toLowerCase()
 
@@ -339,6 +340,7 @@ function what_letter() {
     not_in_word_letter_list.insertAdjacentHTML('beforeend', `<li>${letter_ask}</li>`)
     counter += 1
 
+    // Введення букви в квадратик, в разі відгадання
     for (idx in asked_word) {
         if (asked_word[idx] == letter_ask) {
             $word_list[idx].textContent = asked_word[idx]
@@ -349,18 +351,17 @@ function what_letter() {
         }
     }
 
+    // Введення повного слова після правильно вказаної букви
     if (good_letter) {
-        console.log('really good leatter')
         setTimeout(() => {
             all_world = prompt("Ви готові ввести повне слово? ").toLowerCase()
             if (all_world == asked_word) {
                 win()
             }
-            kruti.disabled = false
-
         }, 1000);
-    }
 
+    }
+    kruti.disabled = false
     if (true_letter == asked_word.length) {
         win()
     }
