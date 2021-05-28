@@ -205,3 +205,14 @@ ul.word li {
     text-transform: uppercase;
     width: 400px;
 }
+
+.overlay .prize {
+    position: absolute;
+    top: 50px;
+    left: 100px;
+}
+
+.overlay .tip_prize {
+    position: absolute;
+    top: 40px;
+}

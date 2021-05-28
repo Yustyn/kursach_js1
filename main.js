@@ -384,3 +384,43 @@ function win() {
 function lose() {
     alert('You lose!')
 }
+
+
+// Подія сектору приз 
+
+function prize_func() {
+    let cont = document.querySelector('div.container')
+
+    let close = `<i class="fas fa-times close_prize"></i>`,
+        tip_1 = `<p class="tip_prize">Ви можете вибрати приз або гроші. </p>`,
+        img = `<img src="images/chest_closed.png" class="prize" alt="prize"></img>`,
+        money = `img src="" class="money" alt="money"`
+
+
+    cont.classList.add('d-none')
+    overlay.classList.add('overlay')
+    overlay.classList.add('d-block')
+
+    document.body.append(overlay)
+
+    overlay.insertAdjacentHTML('beforeend', close)
+    overlay.insertAdjacentHTML('beforeend', img)
+    overlay.insertAdjacentHTML('beforeend', tip_1)
+    overlay.insertAdjacentHTML('beforeend', money)
+
+    $tip_1 = document.querySelector('.overlay > p')
+
+    let $close_icon = document.querySelector('.close')
+
+    $close_icon.addEventListener('click', () => {
+        cont.classList.remove('d-none')
+        overlay.removeChild(ul)
+        overlay.removeChild(unwin)
+        overlay.removeChild($close_icon)
+        overlay.removeChild($tip_1)
+        overlay.removeChild(but_continue)
+        document.body.removeChild(overlay)
+    })
+}
+
+prize_func()
