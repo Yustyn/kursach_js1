@@ -37,6 +37,12 @@ let word = [
     'курсова',
     'паралелепіпед'
 ]
+// Масив призів
+let prize_list = [
+    'степлер',
+    "мікрохвильовка",
+    "клавіатура"
+]
 
 // Викликає рандомне слово із масиву
 asked_word = word[randomNumber(0, word.length - 1)]
@@ -163,6 +169,9 @@ function sektor_result() {
 
     if (letter) {
         what_letter()
+    }
+    if (prize) {
+        prize_func()
     }
 }
 
@@ -389,12 +398,17 @@ function lose() {
 // Подія сектору приз 
 
 function prize_func() {
-    let cont = document.querySelector('div.container')
+    let cont = document.querySelector('div.container'),
+        close = `<i class="fas fa-times close_prize"></i>`,
+        money_value = 100,
+        tip_1 = `<p class="tip_prize">Ви можете вибрати ПРИЗ або гроші - ${money_value}$. </p>`,
+        img = `<img src="./images/chest_closed.png" class="prize" alt="prize"></img>`,
+        money = `<img src="./images/money.png" class="money" alt="money"></img>`
 
-    let close = `<i class="fas fa-times close_prize"></i>`,
-        tip_1 = `<p class="tip_prize">Ви можете вибрати приз або гроші. </p>`,
-        img = `<img src="images/chest_closed.png" class="prize" alt="prize"></img>`,
-        money = `img src="" class="money" alt="money"`
+    let repeat = true,
+        repeat_value = 1,
+        prize_id = prize_list[randomNumber(0, prize_list.length - 1)],
+        prize_select = true
 
 
     cont.classList.add('d-none')
@@ -408,17 +422,54 @@ function prize_func() {
     overlay.insertAdjacentHTML('beforeend', tip_1)
     overlay.insertAdjacentHTML('beforeend', money)
 
+
+    let $close_prize = document.querySelector('.close_prize')
     $tip_1 = document.querySelector('.overlay > p')
+    $prize = document.querySelector('.overlay> img')
+    $money = document.querySelector('.overlay> .money')
+    $close_prize.classList.add('d-none')
 
-    let $close_icon = document.querySelector('.close')
 
-    $close_icon.addEventListener('click', () => {
+
+    $prize.addEventListener('click', () => {
+        if (prize_select) {
+            repeat_scale = randomNumber(0, 100)
+
+            if (repeat) {
+                repeat_value += 1
+                if (repeat_value >= 5 && repeat_scale < 50) {
+                    repeat = false
+                }
+                console.log('repeat_scale = ', repeat_scale, "repeat value = " + repeat_value, 'repeat = ', repeat)
+            } else {
+                overlay.insertAdjacentHTML('beforeend', `<img class="chest_opened_prize" src="images/chest_opened.png" alt="chest_opened">`)
+                overlay.insertAdjacentHTML('beforeend', `<p class="opys">Ваш приз ${prize_id} </p>`)
+                $tip_1.classList.add('d-none')
+                $prize.classList.add('d-none')
+                $money.style.cursor = 'unset'
+                $close_prize.classList.remove('d-none')
+                prize_select = false
+            }
+            $tip_1.innerHTML = `Ви можете вибрати ПРИЗ або гроші - ${money_value * repeat_value}$.`
+        }
+    })
+
+    $money.addEventListener('click', () => {
+        if (prize_select) {
+            $tip_1.innerHTML = `Вітаю! Ви виграли ${money_value * repeat_value}$`
+            $close_prize.classList.remove('d-none')
+            prize_select = false
+        }
+    })
+
+    $close_prize.addEventListener('click', () => {
         cont.classList.remove('d-none')
-        overlay.removeChild(ul)
-        overlay.removeChild(unwin)
         overlay.removeChild($close_icon)
         overlay.removeChild($tip_1)
-        overlay.removeChild(but_continue)
+        overlay.removeChild($prize)
+        overlay.removeChild($money)
+        overlay.removeChild(document.querySelector('.opys'))
+        overlay.removeChild(document.querySelector('.chest_opened_prize'))
         document.body.removeChild(overlay)
     })
 }
