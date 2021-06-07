@@ -474,7 +474,7 @@ function prize_func() {
     })
 }
 
-
+// Класс машина
 class PrizeAuto {
     constructor(model, color) {
         this.model = model
@@ -497,7 +497,7 @@ class PrizeAuto {
     }
 }
 
-
+// Допомагаюча функція для класу
 function createImg(images) {
     let i = 0
     for (image of images) {
@@ -512,13 +512,14 @@ function createImg(images) {
         }
     }
 }
-prize_auto()
+
 
 let audi = new PrizeAuto('audi', 'black')
 let bmw = new PrizeAuto('bmw', 'red')
 let vw = new PrizeAuto('volkswagen', 'blue')
 let skoda = new PrizeAuto('skoda', 'black')
 
+// Масив з назвами класів для рандомного вибору призу авто
 let auto_pull = [
     audi,
     bmw,
