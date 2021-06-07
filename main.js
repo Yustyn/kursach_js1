@@ -37,6 +37,7 @@ let word = [
     'курсова',
     'паралелепіпед'
 ]
+
 // Масив призів
 let prize_list = [
     'степлер',
@@ -125,7 +126,7 @@ function prize_auto() {
                     $close_icon.classList.add('d-none')
 
                     overlay.appendChild(but_again)
-
+                    auto_pull[randomNumber(0, auto_pull.length - 1)].getAuto()
                     document.querySelector('.play_again').addEventListener('click', () => {
                         window.location.reload()
                     })
@@ -327,7 +328,6 @@ kruti.addEventListener('mouseup', () => {
         }
     }
     zekrutil = false
-    // alert(points)
 })
 
 // Показує пусті клітинки від кількості букв в залежності від вибраного слова
@@ -474,4 +474,58 @@ function prize_func() {
     })
 }
 
-prize_func()
+
+class PrizeAuto {
+    constructor(model, color) {
+        this.model = model
+        this.color = color
+    }
+    getAuto() {
+        let url = `https://pixabay.com/api/?key=17057678-b4c4954d8c62e2cb084b2680c&q=${this.model}+${this.color}&image_type=photo`
+        let GET_Server = new XMLHttpRequest()
+
+        GET_Server.open("GET", url)
+        GET_Server.send()
+        GET_Server.onload = function () {
+            if (GET_Server.status !== 200) {
+                console.log("Error loading data!")
+            } else {
+                let data = JSON.parse(GET_Server.response).hits
+                createImg(data)
+            }
+        }
+    }
+}
+
+
+function createImg(images) {
+    let i = 0
+    for (image of images) {
+        i++
+        if (i <= 1) {
+            const $LI = document.createElement('LI')
+            $imageList = document.createElement('UL')
+            $imageList.classList.add('image-list')
+            overlay.insertAdjacentElement('afterbegin', $imageList)
+            $LI.style.backgroundImage = `url(${image.webformatURL})`
+            $imageList.appendChild($LI)
+        }
+    }
+}
+prize_auto()
+
+let audi = new PrizeAuto('audi', 'black')
+let bmw = new PrizeAuto('bmw', 'red')
+let vw = new PrizeAuto('volkswagen', 'blue')
+let skoda = new PrizeAuto('skoda', 'black')
+
+let auto_pull = [
+    audi,
+    bmw,
+    vw,
+    skoda
+]
+
+
+
+
